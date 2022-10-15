@@ -1,16 +1,18 @@
 import React from "react";
-import { Header, Footer } from "components";
 import { Routes } from "./routes";
-import { Container } from "styles";
+import { Container, Footer, Header, Main } from "App.styles";
 
 export const App: React.FC = () => {
   return (
     <Container>
-      <Header />
-      <section>
+      <Header>Cyral Front-end Technical Assessment</Header>
+      <Main>
         <Routes />
-      </section>
-      <Footer />
+      </Main>
+      <Footer>
+        Made with 💙 by &nbsp;
+        <a href="https://github.com/jeangeorge">Jean George</a>
+      </Footer>
     </Container>
   );
 };
