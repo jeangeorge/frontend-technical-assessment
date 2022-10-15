@@ -17,6 +17,7 @@
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
+    "@typescript-eslint/no-floating-promises": "off",
     "import/no-unresolved": "error",
     "prettier/prettier": [
       "error",

@@ -10,31 +10,47 @@ export const GlobalStyle = createGlobalStyle`
 
 export const Container = styled.div`
   display: flex;
-  width: 100%;
-  min-height: 100vh;
   flex-direction: column;
+  gap: 20px;
 `;
 
 export const Header = styled.header`
-  background: lightcyan;
+  background: lightslategray;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 500;
+  color: white;
+  padding: 20px;
 `;
 
 export const Main = styled.main`
-  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 80px;
+  padding-right: 80px;
+  align-items: center;
+  font-size: 16px;
 `;
 
 export const Footer = styled.footer`
   width: 100%;
-  background: PapayaWhip;
+  background: lightslategray;
   position: fixed;
   bottom: 0px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
+  font-size: 16px;
+  color: white;
+  padding: 10px;
+
+  a:visited {
+    color: black;
+  }
+
+  a {
+    color: black;
+  }
 `;
