@@ -1,7 +1,8 @@
+import React from "react";
 import { Routes as ReactRouter, Route } from "react-router-dom";
 import { Home, Category, NotFound } from "./pages";
 
-export function Routes() {
+export const Routes: React.FC = () => {
   return (
     <ReactRouter>
       <Route path="/" element={<Home />} />
@@ -10,4 +11,4 @@ export function Routes() {
       <Route path="*" element={<NotFound />} />
     </ReactRouter>
   );
-}
+};
