@@ -1,46 +1,46 @@
-# Getting Started with Create React App
+# Front-end Technical Assessment
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project it's a simple inventory management application 😀
 
-## Available Scripts
+You can take a look at the app by clicking [here](https://jeangeorge.github.io/frontend-technical-assessment/).
 
-In the project directory, you can run:
+## 🔧 Project setup
 
-### `npm start`
+This project was developed using [Node v16.19.0](https://nodejs.org/ca/blog/release/v16.18.0/) and [NPM 8.19.2](https://www.npmjs.com/package/npm/v/8.19.2).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To set up, first clone this repo:
+```bash
+git clone https://github.com/jeangeorge/frontend-technical-assessment.git
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Enter the project folder:
+```bash
+cd frontend-technical-assessment
+```
 
-### `npm test`
+Install the packages:
+```bash
+npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Run the development server:
+```bash
+npm start
+```
 
-### `npm run build`
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 👨‍💻 Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+This project was developed using [TypeScript](https://www.typescriptlang.org/) and the [React](https://pt-br.reactjs.org/) library.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Some tools/libraries used:
+- [create-react-app](https://create-react-app.dev/)
+- [Prettier](https://prettier.io/)
+- [ESLint](https://eslint.org/)
+- [react-router-dom](https://www.npmjs.com/package/react-router-dom)
+- [styled-components](https://styled-components.com/)
+- [Formik](https://formik.org/)
+- [Yup](https://www.npmjs.com/package/yup)
+- [react-number-format](https://www.npmjs.com/package/react-number-format)
+- [Apollo Client](https://www.apollographql.com/docs/react/)
