@@ -12,15 +12,16 @@ import { useLazyQuery } from "@apollo/client";
 import { AllCategoriesResponse } from "graphql/responses";
 import { AllCategoriesVariables } from "graphql/variables";
 import { ALL_CATEGORIES } from "graphql/queries";
+import { CategoryPageContext } from "contexts";
 
 export const CategoryPage: React.FC = () => {
   const [categoryId, setCategoryId] = useState<number>();
-  const [category, setCategory] = useState<Category>();
+  const [category, setCategory] = useState({} as Category);
   const [isModalOpened, setIsModalOpened] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
 
-  const [getProducts, { loading, error, data }] = useLazyQuery<
+  const [getCategory, { loading, error, data }] = useLazyQuery<
     AllCategoriesResponse,
     AllCategoriesVariables
   >(ALL_CATEGORIES);
@@ -35,7 +36,7 @@ export const CategoryPage: React.FC = () => {
 
   useEffect(() => {
     if (categoryId !== undefined) {
-      getProducts({ variables: { filter: { id: categoryId } } });
+      getCategory({ variables: { filter: { id: categoryId } } });
     }
   }, [categoryId]);
 
@@ -49,34 +50,34 @@ export const CategoryPage: React.FC = () => {
   if (error != null) return <span>An error ocurred, please try again</span>;
 
   return (
-    <Wrapper>
-      <Breadcrumb
-        options={[
-          { title: "Home", redirect: "/" },
-          {
-            title: category != null ? `Category - ${category.name}` : undefined,
-          },
-        ]}
-      ></Breadcrumb>
+    <CategoryPageContext.Provider value={{ category, getCategory }}>
+      <Wrapper>
+        <Breadcrumb
+          options={[
+            { title: "Home", redirect: "/" },
+            {
+              title:
+                category != null ? `Category - ${category.name}` : undefined,
+            },
+          ]}
+        ></Breadcrumb>
 
-      {category !== undefined ? (
-        <>
-          <Title>Category name: {category.name}</Title>
-          <Header>
-            <Title>Products</Title>
-            <Button onClick={() => setIsModalOpened(true)}>Add</Button>
-          </Header>
-          <ProductsTable products={category.Products} />
-          {isModalOpened && (
-            <AddProductModal
-              categoryId={category.id}
-              onClose={() => setIsModalOpened(false)}
-            />
-          )}
-        </>
-      ) : (
-        <div>No category was found.</div>
-      )}
-    </Wrapper>
+        {category.id !== undefined ? (
+          <>
+            <Title>Category name: {category.name}</Title>
+            <Header>
+              <Title>Products</Title>
+              <Button onClick={() => setIsModalOpened(true)}>Add</Button>
+            </Header>
+            <ProductsTable />
+            {isModalOpened && (
+              <AddProductModal onClose={() => setIsModalOpened(false)} />
+            )}
+          </>
+        ) : (
+          <div>No category was found.</div>
+        )}
+      </Wrapper>
+    </CategoryPageContext.Provider>
   );
 };

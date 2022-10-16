@@ -14,12 +14,11 @@ import {
 } from "components";
 
 import { Wrapper } from "./ProductsTable.styles";
+import { useCategoryPage } from "hooks";
 
-interface ProductsTableProps {
-  products: Product[];
-}
+export const ProductsTable: React.FC = () => {
+  const { category } = useCategoryPage();
 
-export const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
   const navigate = useNavigate();
 
   function handleClickRow(id: number): void {
@@ -36,7 +35,7 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
           </TableHeaderRow>
         </TableHeader>
         <TableBody>
-          {products.map((product) => (
+          {category?.Products.map((product) => (
             <TableBodyRow
               key={`product-${product.id}`}
               onClick={() => handleClickRow(product.id)}

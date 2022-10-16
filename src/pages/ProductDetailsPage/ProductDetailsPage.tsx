@@ -1,4 +1,17 @@
-import { Breadcrumb, Button } from "components";
+import { useLazyQuery, useMutation } from "@apollo/client";
+import { Breadcrumb, Button, Spinner } from "components";
+import { REMOVE_PRODUCT, UPDATE_PRODUCT } from "graphql/mutations";
+import { ALL_PRODUCTS } from "graphql/queries";
+import {
+  AllProductsResponse,
+  RemoveProductResponse,
+  UpdateProductResponse,
+} from "graphql/responses";
+import {
+  AllProductsVariables,
+  RemoveProductVariables,
+  UpdateProductVariables,
+} from "graphql/variables";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Product } from "types";
@@ -9,56 +22,55 @@ import {
 } from "./ProductDetailsPage.styles";
 
 export const ProductDetailsPage: React.FC = () => {
-  const [productId, setProductId] = useState<string>();
+  const [productId, setProductId] = useState<number>();
   const [product, setProduct] = useState<Product>();
-  const [isRequesting, setIsRequesting] = useState(false);
+
+  const [getProduct, { loading, error, data }] = useLazyQuery<
+    AllProductsResponse,
+    AllProductsVariables
+  >(ALL_PRODUCTS);
+
+  const [updateProduct, { loading: updateLoading }] = useMutation<
+    UpdateProductResponse,
+    UpdateProductVariables
+  >(UPDATE_PRODUCT, {
+    onCompleted(data) {
+      if (data.updateProduct.id !== undefined) {
+        getProduct({ variables: { filter: { id: data.updateProduct.id } } });
+      }
+    },
+  });
+
+  const [removeProduct, { loading: removeLoading, error: removeError }] =
+    useMutation<RemoveProductResponse, RemoveProductVariables>(REMOVE_PRODUCT);
 
   const params = useParams();
   const navigate = useNavigate();
 
-  async function fetchProduct(): Promise<void> {
-    if (productId !== undefined) {
-      setIsRequesting(true);
-      // const product = await getProductById(productId);
-      setIsRequesting(false);
-      setProduct(product);
-    }
-  }
-
   async function increaseStock(): Promise<void> {
     if (product != null) {
-      setIsRequesting(true);
-      // const saved = await saveProduct({ ...product, stock: product.stock + 1 });
-      setIsRequesting(false);
-      // if (saved) {
-      //   fetchProduct();
-      // }
+      await updateProduct({
+        variables: { updateProductId: product.id, stock: product.stock + 1 },
+      });
     }
   }
 
   async function decreaseStock(): Promise<void> {
     if (product != null) {
-      setIsRequesting(true);
-      // const saved = await saveProduct({ ...product, stock: product.stock - 1 });
-      setIsRequesting(false);
-      // if (saved) {
-      //   fetchProduct();
-      // }
+      await updateProduct({
+        variables: { updateProductId: product.id, stock: product.stock - 1 },
+      });
     }
   }
 
   async function deleteProduct(): Promise<void> {
-    if (product != null) {
+    if (product != null && productId !== undefined) {
       const confirmed = confirm(
         "Are you sure you want to remove this product?"
       );
       if (confirmed) {
-        setIsRequesting(true);
-        // const deleted = await removeProduct(product.id);
-        // if (deleted) {
-        //   navigate(`/category/${product.category_id}`);
-        // }
-        setIsRequesting(false);
+        await removeProduct({ variables: { removeProductId: productId } });
+        navigate(`/category/${product.category_id}`);
       }
     }
   }
@@ -67,13 +79,31 @@ export const ProductDetailsPage: React.FC = () => {
     if (params === null || params.id === undefined || isNaN(+params.id)) {
       navigate("/404");
     } else {
-      setProductId(params.id);
+      setProductId(+params.id);
     }
   }, [params]);
 
   useEffect(() => {
-    fetchProduct();
+    if (productId !== undefined) {
+      getProduct({ variables: { filter: { id: productId } } });
+    }
   }, [productId]);
+
+  useEffect(() => {
+    if (data !== undefined) {
+      setProduct(data.allProducts[0]);
+    }
+  }, [data]);
+
+  if (loading || removeLoading) return <Spinner />;
+  if (error != null)
+    return (
+      <span>There was an error fetching the product, please try again.</span>
+    );
+  if (removeError != null)
+    return (
+      <span>There was an error deleting the product, please try again.</span>
+    );
 
   return product !== undefined ? (
     <Wrapper>
@@ -91,21 +121,21 @@ export const ProductDetailsPage: React.FC = () => {
         <span>Price: {product.price}</span>
       </ProductSection>
       <ButtonsSection>
-        <Button disabled={isRequesting} onClick={increaseStock}>
+        <Button disabled={loading || updateLoading} onClick={increaseStock}>
           Increase stock
         </Button>
         <Button
-          disabled={isRequesting || product.stock === 0}
+          disabled={loading || updateLoading || product.stock === 0}
           onClick={decreaseStock}
         >
           Decrease stock
         </Button>
-        <Button disabled={isRequesting} onClick={deleteProduct}>
-          Delete product
+        <Button disabled={loading || updateLoading} onClick={deleteProduct}>
+          Remove product
         </Button>
       </ButtonsSection>
     </Wrapper>
   ) : (
-    <div>Something seems to be wrong...</div>
+    <div>No product found.</div>
   );
 };

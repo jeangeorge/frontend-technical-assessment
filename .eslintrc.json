@@ -19,6 +19,7 @@
   "rules": {
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/consistent-type-assertions": "off",
     "import/no-unresolved": "error",
     "prettier/prettier": [
       "error",

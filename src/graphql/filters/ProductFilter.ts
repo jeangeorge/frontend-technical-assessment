@@ -1,3 +1,3 @@
 export interface ProductFilter {
-  category_id: number;
+  id: number;
 }

@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
-export const ALL_PRODUCTS = gql`
-  query AllProducts($filter: ProductFilter) {
-    allProducts(filter: $filter) {
+export const REMOVE_PRODUCT = gql`
+  mutation Mutation($removeProductId: ID!) {
+    removeProduct(id: $removeProductId) {
       id
       name
       description

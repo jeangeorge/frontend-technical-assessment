@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { NumericFormat } from "react-number-format";
 
-import { Button } from "components";
+import { Button, Spinner } from "components";
 import {
   Wrapper,
   Header,
@@ -14,9 +14,14 @@ import {
   Input,
   Label,
 } from "./AddProductModal.styles";
+import { useMutation } from "@apollo/client";
+import { CREATE_PRODUCT } from "graphql/mutations";
+import { CreateProductVariables } from "graphql/variables";
+import { CreateProductResponse } from "graphql/responses";
+import { CategoryPage } from "../CategoryPage";
+import { CategoryPageContext } from "contexts";
 
 interface AddProductModalProps {
-  categoryId: number;
   onClose: () => void;
 }
 
@@ -29,10 +34,14 @@ const validationSchema = Yup.object().shape({
 });
 
 export const AddProductModal: React.FC<AddProductModalProps> = ({
-  categoryId,
   onClose,
 }) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { category, getCategory } = useContext(CategoryPageContext);
+
+  const [createProduct, { loading, error }] = useMutation<
+    CreateProductResponse,
+    CreateProductVariables
+  >(CREATE_PRODUCT);
 
   const formik = useFormik({
     initialValues: {
@@ -44,12 +53,21 @@ export const AddProductModal: React.FC<AddProductModalProps> = ({
     },
     validationSchema,
     onSubmit: async (values) => {
-      setIsSubmitting(true);
-      // await saveProduct({ ...values, category_id: categoryId });
+      await createProduct({
+        variables: {
+          ...values,
+          categoryId: category?.id,
+          stock: +values.stock,
+          price: +values.price,
+        },
+      });
+      getCategory({ variables: { filter: { id: category?.id } } });
       onClose();
-      setIsSubmitting(false);
     },
   });
+
+  if (loading) return <Spinner />;
+  if (error != null) return <span>Unable to save, please try again.</span>;
 
   return (
     <Wrapper onClick={onClose}>
@@ -115,7 +133,7 @@ export const AddProductModal: React.FC<AddProductModalProps> = ({
               hasError={formik.errors.price !== undefined}
             />
           </FormGroup>
-          <Button type="submit" disabled={!formik.isValid || isSubmitting}>
+          <Button type="submit" disabled={!formik.isValid || loading}>
             Submit
           </Button>
         </Form>

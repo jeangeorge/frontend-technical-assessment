@@ -1,15 +1,17 @@
 import { gql } from "@apollo/client";
 
-export const CREATE_PRODUCT = gql`
+export const UPDATE_PRODUCT = gql`
   mutation Mutation(
-    $name: String!
-    $description: String!
-    $color: String!
-    $stock: Int!
-    $price: Float!
-    $categoryId: ID!
+    $updateProductId: ID!
+    $name: String
+    $description: String
+    $color: String
+    $stock: Int
+    $price: Float
+    $categoryId: ID
   ) {
-    createProduct(
+    updateProduct(
+      id: $updateProductId
       name: $name
       description: $description
       color: $color
@@ -17,13 +19,13 @@ export const CREATE_PRODUCT = gql`
       price: $price
       category_id: $categoryId
     ) {
-      id
       name
       description
       color
       stock
       price
       category_id
+      id
     }
   }
 `;
