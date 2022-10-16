@@ -45,21 +45,16 @@ export const Main = styled.main`
 `;
 
 export const Footer = styled.footer`
-  /* width: 100%; */
   background: lightslategray;
-  /* position: fixed; */
-  /* bottom: 0px; */
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 16px;
   color: white;
   padding: 10px;
-
   a:visited {
     color: black;
   }
-
   a {
     color: black;
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Product } from "types";
+import { useCategoryPage } from "hooks";
 
 import {
   Table,
@@ -14,16 +14,11 @@ import {
 } from "components";
 
 import { Wrapper } from "./ProductsTable.styles";
-import { useCategoryPage } from "hooks";
 
 export const ProductsTable: React.FC = () => {
   const { category } = useCategoryPage();
 
   const navigate = useNavigate();
-
-  function handleClickRow(id: number): void {
-    navigate(`/product/${id}`);
-  }
 
   return (
     <Wrapper>
@@ -35,10 +30,10 @@ export const ProductsTable: React.FC = () => {
           </TableHeaderRow>
         </TableHeader>
         <TableBody>
-          {category?.Products.map((product) => (
+          {category?.Products?.map((product) => (
             <TableBodyRow
               key={`product-${product.id}`}
-              onClick={() => handleClickRow(product.id)}
+              onClick={() => navigate(`/product/${product.id}`)}
             >
               <TableBodyCell>{product.name}</TableBodyCell>
               <TableBodyCell>{product.description}</TableBodyCell>

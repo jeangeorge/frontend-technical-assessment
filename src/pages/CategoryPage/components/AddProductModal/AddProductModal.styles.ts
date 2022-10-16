@@ -67,7 +67,7 @@ export const Form = styled.form`
   padding: 30px 0 30px 0;
 `;
 
-export const FormGroup = styled.form`
+export const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;

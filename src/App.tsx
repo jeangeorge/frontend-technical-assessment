@@ -1,5 +1,7 @@
 import React from "react";
+
 import { Routes } from "./routes";
+
 import { Container, Footer, Header, Main, Section } from "App.styles";
 
 export const App: React.FC = () => {

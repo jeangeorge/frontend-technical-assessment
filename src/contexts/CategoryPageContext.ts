@@ -10,6 +10,8 @@ export interface ICategoryPageContext {
     AllCategoriesResponse,
     AllCategoriesVariables
   >;
+  isModalOpened: boolean;
+  setIsModalOpened: (isModalOpened: boolean) => void;
 }
 
 export const CategoryPageContext = createContext({} as ICategoryPageContext);

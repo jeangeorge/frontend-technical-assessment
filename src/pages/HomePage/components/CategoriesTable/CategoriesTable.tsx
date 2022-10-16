@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useHomePage } from "hooks";
+
 import {
   Table,
   TableBody,
@@ -10,20 +12,10 @@ import {
   TableHeaderCell,
   TableHeaderRow,
 } from "components";
-import { Category } from "types";
 
-interface CategoriesTableProps {
-  categories: Category[];
-}
-
-export const CategoriesTable: React.FC<CategoriesTableProps> = ({
-  categories,
-}) => {
+export const CategoriesTable: React.FC = () => {
+  const { data } = useHomePage();
   const navigate = useNavigate();
-
-  function handleClickRow(id: number): void {
-    navigate(`/category/${id}`);
-  }
 
   return (
     <Table>
@@ -34,10 +26,10 @@ export const CategoriesTable: React.FC<CategoriesTableProps> = ({
         </TableHeaderRow>
       </TableHeader>
       <TableBody>
-        {categories.map((category) => (
+        {data?.allCategories.map((category) => (
           <TableBodyRow
             key={`category-${category.id}`}
-            onClick={() => handleClickRow(category.id)}
+            onClick={() => navigate(`/category/${category.id}`)}
           >
             <TableBodyCell>{category.name}</TableBodyCell>
             <TableBodyCell>{category.description}</TableBodyCell>

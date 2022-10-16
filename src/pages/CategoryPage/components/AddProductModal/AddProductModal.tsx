@@ -1,10 +1,17 @@
 import React, { useContext } from "react";
+import { useMutation } from "@apollo/client";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { NumericFormat } from "react-number-format";
 
-import { Button, Spinner } from "components";
+import { CREATE_PRODUCT } from "graphql/mutations";
+import { CreateProductVariables } from "graphql/variables";
+import { CreateProductResponse } from "graphql/responses";
+
+import { CategoryPageContext } from "contexts";
+import { Button, Error, Spinner } from "components";
+
 import {
   Wrapper,
   Header,
@@ -14,16 +21,6 @@ import {
   Input,
   Label,
 } from "./AddProductModal.styles";
-import { useMutation } from "@apollo/client";
-import { CREATE_PRODUCT } from "graphql/mutations";
-import { CreateProductVariables } from "graphql/variables";
-import { CreateProductResponse } from "graphql/responses";
-
-import { CategoryPageContext } from "contexts";
-
-interface AddProductModalProps {
-  onClose: () => void;
-}
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
@@ -33,10 +30,9 @@ const validationSchema = Yup.object().shape({
   price: Yup.number().min(0.1).required("Required"),
 });
 
-export const AddProductModal: React.FC<AddProductModalProps> = ({
-  onClose,
-}) => {
-  const { category, getCategory } = useContext(CategoryPageContext);
+export const AddProductModal: React.FC = () => {
+  const { category, getCategory, isModalOpened, setIsModalOpened } =
+    useContext(CategoryPageContext);
 
   const [createProduct, { loading, error }] = useMutation<
     CreateProductResponse,
@@ -62,18 +58,24 @@ export const AddProductModal: React.FC<AddProductModalProps> = ({
         },
       });
       getCategory({ variables: { filter: { id: category?.id } } });
-      onClose();
+      closeModal();
     },
   });
 
-  if (loading) return <Spinner />;
-  if (error != null) return <span>Unable to save, please try again.</span>;
+  function closeModal(): void {
+    setIsModalOpened(false);
+  }
 
-  return (
-    <Wrapper onClick={onClose}>
+  if (loading) return <Spinner />;
+
+  if (error != null)
+    return <Error message="Unable to save, please try again." />;
+
+  return isModalOpened ? (
+    <Wrapper onClick={closeModal}>
       <Content onClick={(event) => event.stopPropagation()}>
         <Header>
-          <Button onClick={onClose}>X</Button>
+          <Button onClick={closeModal}>X</Button>
         </Header>
         <Form onSubmit={formik.handleSubmit}>
           <FormGroup>
@@ -139,5 +141,5 @@ export const AddProductModal: React.FC<AddProductModalProps> = ({
         </Form>
       </Content>
     </Wrapper>
-  );
+  ) : null;
 };

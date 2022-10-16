@@ -1,25 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Breadcrumb, Button, Spinner } from "components";
-import { Category } from "types";
-
-import { Wrapper, Title, Header } from "./CategoryPage.styles";
-import { ProductsTable } from "./ProductsTable";
-import { AddProductModal } from "./AddProductModal";
 import { useLazyQuery } from "@apollo/client";
+
+import { Breadcrumb, Error, Spinner } from "components";
+import { Category } from "types";
+import { CategoryPageContext } from "contexts";
 
 import { AllCategoriesResponse } from "graphql/responses";
 import { AllCategoriesVariables } from "graphql/variables";
 import { ALL_CATEGORIES } from "graphql/queries";
-import { CategoryPageContext } from "contexts";
+
+import { ProductsTable, AddProductModal, HeaderSection } from "./components";
+import { Wrapper } from "./CategoryPage.styles";
 
 export const CategoryPage: React.FC = () => {
-  const [categoryId, setCategoryId] = useState<number>();
   const [category, setCategory] = useState({} as Category);
   const [isModalOpened, setIsModalOpened] = useState(false);
+
   const params = useParams();
   const navigate = useNavigate();
+
+  const breadcrumb = useMemo(() => {
+    if (category === undefined) {
+      return undefined;
+    }
+    return `Category - ${category.name}`;
+  }, [category]);
 
   const [getCategory, { loading, error, data }] = useLazyQuery<
     AllCategoriesResponse,
@@ -30,15 +37,9 @@ export const CategoryPage: React.FC = () => {
     if (params === null || params.id === undefined || isNaN(+params.id)) {
       navigate("/404");
     } else {
-      setCategoryId(+params.id);
+      getCategory({ variables: { filter: { id: +params.id } } });
     }
   }, [params]);
-
-  useEffect(() => {
-    if (categoryId !== undefined) {
-      getCategory({ variables: { filter: { id: categoryId } } });
-    }
-  }, [categoryId]);
 
   useEffect(() => {
     if (data !== undefined) {
@@ -47,35 +48,24 @@ export const CategoryPage: React.FC = () => {
   }, [data]);
 
   if (loading) return <Spinner />;
-  if (error != null) return <span>An error ocurred, please try again</span>;
+  if (error != null) return <Error />;
 
   return (
-    <CategoryPageContext.Provider value={{ category, getCategory }}>
+    <CategoryPageContext.Provider
+      value={{ category, getCategory, isModalOpened, setIsModalOpened }}
+    >
       <Wrapper>
         <Breadcrumb
-          options={[
-            { title: "Home", redirect: "/" },
-            {
-              title:
-                category != null ? `Category - ${category.name}` : undefined,
-            },
-          ]}
+          options={[{ title: "Home", redirect: "/" }, { title: breadcrumb }]}
         ></Breadcrumb>
-
-        {category.id !== undefined ? (
+        {category !== undefined ? (
           <>
-            <Title>Category name: {category.name}</Title>
-            <Header>
-              <Title>Products</Title>
-              <Button onClick={() => setIsModalOpened(true)}>Add</Button>
-            </Header>
+            <HeaderSection />
             <ProductsTable />
-            {isModalOpened && (
-              <AddProductModal onClose={() => setIsModalOpened(false)} />
-            )}
+            <AddProductModal />
           </>
         ) : (
-          <div>No category was found.</div>
+          <Error message="No category was found." />
         )}
       </Wrapper>
     </CategoryPageContext.Provider>

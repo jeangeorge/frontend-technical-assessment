@@ -6,17 +6,3 @@ export const Wrapper = styled.div`
   flex-direction: column;
   gap: 30px;
 `;
-
-export const ProductSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  font-size: 24px;
-`;
-
-export const ButtonsSection = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 40px;
-`;

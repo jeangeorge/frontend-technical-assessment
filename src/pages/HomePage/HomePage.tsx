@@ -1,34 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useQuery } from "@apollo/client";
-
-import { Breadcrumb, Spinner } from "components";
-import { Category } from "types";
 
 import { AllCategoriesResponse } from "graphql/responses";
 import { ALL_CATEGORIES } from "graphql/queries";
 
-import { CategoriesTable } from "./CategoriesTable";
+import { Breadcrumb, Error, Spinner } from "components";
+import { HomePageContext } from "contexts";
+
+import { CategoriesTable } from "./components";
 import { Wrapper } from "./HomePage.styles";
 
 export const HomePage: React.FC = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
-
   const { loading, error, data } =
     useQuery<AllCategoriesResponse>(ALL_CATEGORIES);
 
-  useEffect(() => {
-    if (data !== undefined) {
-      setCategories(data.allCategories);
-    }
-  }, [data]);
-
   if (loading) return <Spinner />;
-  if (error != null) return <span>An error ocurred, please try again</span>;
+  if (error !== undefined) return <Error />;
 
   return (
-    <Wrapper>
-      <Breadcrumb options={[{ title: "Home" }]} />
-      <CategoriesTable categories={categories} />
-    </Wrapper>
+    <HomePageContext.Provider value={{ data }}>
+      <Wrapper>
+        <Breadcrumb options={[{ title: "Home" }]} />
+        <CategoriesTable />
+      </Wrapper>
+    </HomePageContext.Provider>
   );
 };
