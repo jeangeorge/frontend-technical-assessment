@@ -31,7 +31,7 @@ export const CategoryPage: React.FC = () => {
   const [getCategory, { loading, error, data }] = useLazyQuery<
     AllCategoriesResponse,
     AllCategoriesVariables
-  >(ALL_CATEGORIES);
+  >(ALL_CATEGORIES, { fetchPolicy: "network-only" });
 
   useEffect(() => {
     if (params === null || params.id === undefined || isNaN(+params.id)) {
