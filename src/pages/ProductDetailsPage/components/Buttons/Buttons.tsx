@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
 import { REMOVE_PRODUCT, UPDATE_PRODUCT } from "graphql/mutations";
@@ -15,7 +16,6 @@ import { Button } from "components";
 import { useProductDetailsPage } from "hooks";
 
 import { Wrapper } from "./Buttons.styles";
-import { useNavigate } from "react-router-dom";
 
 export const Buttons: React.FC = () => {
   const { loading, product, getProduct } = useProductDetailsPage();
