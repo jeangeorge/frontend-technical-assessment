@@ -5,7 +5,7 @@ import { Container, Footer, Header, Main } from "App.styles";
 export const App: React.FC = () => {
   return (
     <Container>
-      <Header>Cyral Front-end Technical Assessment</Header>
+      <Header>Front-end Technical Assessment</Header>
       <Main>
         <Routes />
       </Main>
