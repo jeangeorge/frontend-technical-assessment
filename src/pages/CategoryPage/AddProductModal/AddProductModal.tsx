@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -18,7 +18,7 @@ import { useMutation } from "@apollo/client";
 import { CREATE_PRODUCT } from "graphql/mutations";
 import { CreateProductVariables } from "graphql/variables";
 import { CreateProductResponse } from "graphql/responses";
-import { CategoryPage } from "../CategoryPage";
+
 import { CategoryPageContext } from "contexts";
 
 interface AddProductModalProps {
