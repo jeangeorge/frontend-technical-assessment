@@ -9,9 +9,18 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const Container = styled.div`
+  min-height: 100vh;
+  gap: 20px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const Section = styled.section`
   gap: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export const Header = styled.header`
@@ -32,13 +41,14 @@ export const Main = styled.main`
   padding-right: 80px;
   align-items: center;
   font-size: 16px;
+  min-height: 100%;
 `;
 
 export const Footer = styled.footer`
-  width: 100%;
+  /* width: 100%; */
   background: lightslategray;
-  position: fixed;
-  bottom: 0px;
+  /* position: fixed; */
+  /* bottom: 0px; */
   display: flex;
   justify-content: center;
   align-items: center;

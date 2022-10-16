@@ -1,4 +1,4 @@
-import { SaveProductParams } from "types/saveProductParams";
+import { SaveProductParams } from "types";
 
 export async function saveProduct(
   product: SaveProductParams

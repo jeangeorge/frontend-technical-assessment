@@ -1,10 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery, gql } from "@apollo/client";
-
-import { Category } from "types";
-
-import { getCategories } from "services";
 
 import {
   Table,
@@ -15,31 +10,20 @@ import {
   TableHeaderCell,
   TableHeaderRow,
 } from "components";
-import { GET_CATEGORIES } from "queries";
+import { Category } from "types";
 
-export const CategoriesTable: React.FC = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
+interface CategoriesTableProps {
+  categories: Category[];
+}
 
-  const { loading, error, data } = useQuery(GET_CATEGORIES);
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
+export const CategoriesTable: React.FC<CategoriesTableProps> = ({
+  categories,
+}) => {
   const navigate = useNavigate();
-
-  async function fetchCategories(): Promise<void> {
-    const categories = await getCategories();
-    setCategories(categories);
-  }
 
   function handleClickRow(id: string): void {
     navigate(`/category/${id}`);
   }
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
 
   return (
     <Table>

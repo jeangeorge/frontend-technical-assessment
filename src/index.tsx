@@ -8,7 +8,7 @@ import { App } from "./App";
 import { GlobalStyle } from "App.styles";
 
 const client = new ApolloClient({
-  uri: "http://sample-shop.up.railway.app", // maybe can be moved to a .env
+  uri: "https://sample-shop.up.railway.app/graphql", // maybe can be moved to a .env
   cache: new InMemoryCache(),
 });
 
@@ -16,11 +16,13 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
+console.log(process.env.NODE_ENV);
+
 root.render(
   <React.StrictMode>
     <BrowserRouter
       basename={
-        process.env.NODE_ENV === "production"
+        process.env.NODE_ENV !== "development"
           ? process.env.PUBLIC_URL
           : undefined
       }

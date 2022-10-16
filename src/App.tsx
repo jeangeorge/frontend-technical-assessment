@@ -1,14 +1,16 @@
 import React from "react";
 import { Routes } from "./routes";
-import { Container, Footer, Header, Main } from "App.styles";
+import { Container, Footer, Header, Main, Section } from "App.styles";
 
 export const App: React.FC = () => {
   return (
     <Container>
-      <Header>Front-end Technical Assessment</Header>
-      <Main>
-        <Routes />
-      </Main>
+      <Section>
+        <Header>Front-end Technical Assessment</Header>
+        <Main>
+          <Routes />
+        </Main>
+      </Section>
       <Footer>
         Made with 💙 by &nbsp;
         <a href="https://github.com/jeangeorge">Jean George</a>
