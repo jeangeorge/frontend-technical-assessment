@@ -14,8 +14,8 @@ export const Routes: React.FC = () => {
       <Route path="/" element={<HomePage />} />
       <Route path="/category/:id" element={<CategoryPage />} />
       <Route path="/product/:id" element={<ProductDetailsPage />} />
-      <Route path="/404" element={<NotFoundPage />} />
-      <Route path="*" element={<NotFoundPage />} />
+      {/* <Route path="/404" element={<NotFoundPage />} />
+      <Route path="*" element={<NotFoundPage />} /> */}
     </ReactRouter>
   );
 };
