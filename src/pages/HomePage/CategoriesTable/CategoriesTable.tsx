@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery, gql } from "@apollo/client";
 
 import { Category } from "types";
 
@@ -14,9 +15,16 @@ import {
   TableHeaderCell,
   TableHeaderRow,
 } from "components";
+import { GET_CATEGORIES } from "queries";
 
 export const CategoriesTable: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
+
+  const { loading, error, data } = useQuery(GET_CATEGORIES);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   const navigate = useNavigate();
 
