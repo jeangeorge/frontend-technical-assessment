@@ -14,6 +14,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({ options }) => {
     <Wrapper>
       {options.map((option) => (
         <Option key={option.title}>
+          &nbsp;
           {option.redirect !== undefined ? (
             <Link to={option.redirect}>{option.title}</Link>
           ) : (

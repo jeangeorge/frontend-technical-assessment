@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
-export const TableBodyRow = styled.tr`
-  height: 90px;
+interface TableBodyRowProps {
+  height?: string;
+}
+
+export const TableBodyRow = styled.tr<TableBodyRowProps>`
+  height: ${(p) => p.height ?? "90px"};
   :nth-child(even) {
     background-color: #f2f2f2;
   }

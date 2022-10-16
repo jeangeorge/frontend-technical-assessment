@@ -9,10 +9,10 @@ export const App: React.FC = () => {
       <Main>
         <Routes />
       </Main>
-      <Footer>
+      {/* <Footer>
         Made with 💙 by &nbsp;
         <a href="https://github.com/jeangeorge">Jean George</a>
-      </Footer>
+      </Footer> */}
     </Container>
   );
 };

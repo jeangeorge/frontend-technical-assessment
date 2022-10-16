@@ -1,3 +1,3 @@
-export * from "./Category";
-export * from "./Home";
-export * from "./NotFound";
+export * from "./CategoryPage";
+export * from "./HomePage";
+export * from "./NotFoundPage";
