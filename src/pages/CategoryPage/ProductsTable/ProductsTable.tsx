@@ -22,7 +22,7 @@ interface ProductsTableProps {
 export const ProductsTable: React.FC<ProductsTableProps> = ({ products }) => {
   const navigate = useNavigate();
 
-  function handleClickRow(id: string): void {
+  function handleClickRow(id: number): void {
     navigate(`/product/${id}`);
   }
 

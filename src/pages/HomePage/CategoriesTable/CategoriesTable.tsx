@@ -21,7 +21,7 @@ export const CategoriesTable: React.FC<CategoriesTableProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  function handleClickRow(id: string): void {
+  function handleClickRow(id: number): void {
     navigate(`/category/${id}`);
   }
 

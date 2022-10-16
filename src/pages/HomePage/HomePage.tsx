@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 
 import { Breadcrumb, Spinner } from "components";
-import { Category, AllCategoriesResponse } from "types";
-import { ALL_CATEGORIES } from "queries";
+import { Category } from "types";
 
 import { CategoriesTable } from "./CategoriesTable";
 
 import { Wrapper } from "./HomePage.styles";
+import { AllCategoriesResponse } from "graphql/responses";
+import { ALL_CATEGORIES } from "graphql/queries";
 
 export const HomePage: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);

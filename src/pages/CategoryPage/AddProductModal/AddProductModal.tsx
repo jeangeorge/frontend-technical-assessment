@@ -4,8 +4,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { NumericFormat } from "react-number-format";
 
-import { saveProduct } from "services/saveProduct";
-
 import { Button } from "components";
 import {
   Wrapper,
@@ -18,7 +16,7 @@ import {
 } from "./AddProductModal.styles";
 
 interface AddProductModalProps {
-  categoryId: string;
+  categoryId: number;
   onClose: () => void;
 }
 
@@ -47,7 +45,7 @@ export const AddProductModal: React.FC<AddProductModalProps> = ({
     validationSchema,
     onSubmit: async (values) => {
       setIsSubmitting(true);
-      await saveProduct({ ...values, category_id: categoryId });
+      // await saveProduct({ ...values, category_id: categoryId });
       onClose();
       setIsSubmitting(false);
     },

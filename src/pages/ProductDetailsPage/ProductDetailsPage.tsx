@@ -1,7 +1,6 @@
 import { Breadcrumb, Button } from "components";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getProductById, removeProduct, saveProduct } from "services";
 import { Product } from "types";
 import {
   ButtonsSection,
@@ -20,7 +19,7 @@ export const ProductDetailsPage: React.FC = () => {
   async function fetchProduct(): Promise<void> {
     if (productId !== undefined) {
       setIsRequesting(true);
-      const product = await getProductById(productId);
+      // const product = await getProductById(productId);
       setIsRequesting(false);
       setProduct(product);
     }
@@ -29,22 +28,22 @@ export const ProductDetailsPage: React.FC = () => {
   async function increaseStock(): Promise<void> {
     if (product != null) {
       setIsRequesting(true);
-      const saved = await saveProduct({ ...product, stock: product.stock + 1 });
+      // const saved = await saveProduct({ ...product, stock: product.stock + 1 });
       setIsRequesting(false);
-      if (saved) {
-        fetchProduct();
-      }
+      // if (saved) {
+      //   fetchProduct();
+      // }
     }
   }
 
   async function decreaseStock(): Promise<void> {
     if (product != null) {
       setIsRequesting(true);
-      const saved = await saveProduct({ ...product, stock: product.stock - 1 });
+      // const saved = await saveProduct({ ...product, stock: product.stock - 1 });
       setIsRequesting(false);
-      if (saved) {
-        fetchProduct();
-      }
+      // if (saved) {
+      //   fetchProduct();
+      // }
     }
   }
 
@@ -55,10 +54,10 @@ export const ProductDetailsPage: React.FC = () => {
       );
       if (confirmed) {
         setIsRequesting(true);
-        const deleted = await removeProduct(product.id);
-        if (deleted) {
-          navigate(`/category/${product.category_id}`);
-        }
+        // const deleted = await removeProduct(product.id);
+        // if (deleted) {
+        //   navigate(`/category/${product.category_id}`);
+        // }
         setIsRequesting(false);
       }
     }
