@@ -1,5 +1,10 @@
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useLazyQuery, useMutation } from "@apollo/client";
+
 import { Breadcrumb, Button, Spinner } from "components";
+import { Product } from "types";
+
 import { REMOVE_PRODUCT, UPDATE_PRODUCT } from "graphql/mutations";
 import { ALL_PRODUCTS } from "graphql/queries";
 import {
@@ -12,9 +17,7 @@ import {
   RemoveProductVariables,
   UpdateProductVariables,
 } from "graphql/variables";
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Product } from "types";
+
 import {
   ButtonsSection,
   ProductSection,

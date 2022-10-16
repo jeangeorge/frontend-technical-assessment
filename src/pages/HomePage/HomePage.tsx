@@ -4,11 +4,11 @@ import { useQuery } from "@apollo/client";
 import { Breadcrumb, Spinner } from "components";
 import { Category } from "types";
 
-import { CategoriesTable } from "./CategoriesTable";
-
-import { Wrapper } from "./HomePage.styles";
 import { AllCategoriesResponse } from "graphql/responses";
 import { ALL_CATEGORIES } from "graphql/queries";
+
+import { CategoriesTable } from "./CategoriesTable";
+import { Wrapper } from "./HomePage.styles";
 
 export const HomePage: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
