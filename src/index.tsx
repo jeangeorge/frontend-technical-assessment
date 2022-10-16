@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
@@ -20,17 +20,11 @@ console.log(process.env.NODE_ENV);
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter
-      basename={
-        process.env.NODE_ENV !== "development"
-          ? process.env.PUBLIC_URL
-          : undefined
-      }
-    >
+    <HashRouter>
       <ApolloProvider client={client}>
         <GlobalStyle />
         <App />
       </ApolloProvider>
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>
 );
