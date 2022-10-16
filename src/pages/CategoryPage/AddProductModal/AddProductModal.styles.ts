@@ -15,7 +15,6 @@ export const Wrapper = styled.div`
   overflow: auto;
   @-webkit-keyframes animatetop {
     from {
-      /* top: -300px; */
       opacity: 0;
     }
     to {

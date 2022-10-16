@@ -38,7 +38,10 @@ export const CategoryPage: React.FC = () => {
   return category !== undefined ? (
     <Wrapper>
       <Breadcrumb
-        options={[{ title: "Home", redirect: "/" }, { title: category.name }]}
+        options={[
+          { title: "Home", redirect: "/" },
+          { title: `Category - ${category.name}` },
+        ]}
       ></Breadcrumb>
       <Title>Category name: {category.name}</Title>
       <Header>
