@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useLazyQuery } from "@apollo/client";
@@ -21,13 +21,6 @@ export const CategoryPage: React.FC = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const breadcrumb = useMemo(() => {
-    if (category === undefined) {
-      return undefined;
-    }
-    return `Category - ${category.name}`;
-  }, [category]);
-
   const [getCategory, { loading, error, data }] = useLazyQuery<
     AllCategoriesResponse,
     AllCategoriesVariables
@@ -48,7 +41,10 @@ export const CategoryPage: React.FC = () => {
   }, [data]);
 
   if (loading) return <Spinner />;
+
   if (error != null) return <Error />;
+
+  if (category === undefined) return <Error message="No category was found." />;
 
   return (
     <CategoryPageContext.Provider
@@ -56,17 +52,16 @@ export const CategoryPage: React.FC = () => {
     >
       <Wrapper>
         <Breadcrumb
-          options={[{ title: "Home", redirect: "/" }, { title: breadcrumb }]}
+          options={[
+            { title: "Home", redirect: "/" },
+            { title: `Category - ${category.name}` },
+          ]}
         ></Breadcrumb>
-        {category !== undefined ? (
-          <>
-            <HeaderSection />
-            <ProductsTable />
-            <AddProductModal />
-          </>
-        ) : (
-          <Error message="No category was found." />
-        )}
+        <>
+          <HeaderSection />
+          <ProductsTable />
+          <AddProductModal />
+        </>
       </Wrapper>
     </CategoryPageContext.Provider>
   );
