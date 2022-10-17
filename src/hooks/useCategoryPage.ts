@@ -1,7 +1,4 @@
-import {
-  CategoryPageContext,
-  ICategoryPageContext,
-} from "contexts/CategoryPageContext";
+import { CategoryPageContext, ICategoryPageContext } from "contexts";
 import { useContext } from "react";
 
 export function useCategoryPage(): ICategoryPageContext {
